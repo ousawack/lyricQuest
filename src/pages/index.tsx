@@ -68,7 +68,7 @@ const Home: NextPage = () => {
         <h2 className="bg-gradient-to-r from-amber-400 to-red-900 bg-clip-text text-[5rem] font-black text-transparent md:text-[7rem]">
           LyricQuest
         </h2>
-        <p className="text-center text-base font-bold text-orange-200 md:text-xl">
+        <p className="text-center font-beth text-base font-normal text-orange-200 md:text-xl">
           Explore the poetic words behind your beloved tunes
         </p>
       </section>
