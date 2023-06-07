@@ -1,5 +1,5 @@
 import { type NextPage } from "next";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 import { Layout } from "~/components/Layout";
 import { CheckIcon } from "~/components/icons/Check";
@@ -18,6 +18,15 @@ const Home: NextPage = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const sleep = (ms: number) =>
     new Promise((resolve) => setTimeout(resolve, ms));
+
+  useEffect(() => {
+    const storedTrackName = localStorage.getItem("trackName");
+    const storedArtistName = localStorage.getItem("artistName");
+    if (storedTrackName && storedArtistName) {
+      setTrackName(storedTrackName);
+      setArtistName(storedArtistName);
+    }
+  }, []);
 
   const handleTrackChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTrackName(e.target.value);
@@ -61,6 +70,11 @@ const Home: NextPage = () => {
         toast.error("Couldn't Copy!");
       });
   };
+
+  useEffect(() => {
+    localStorage.setItem("trackName", trackName);
+    localStorage.setItem("artistName", artistName);
+  }, [trackName, artistName]);
 
   return (
     <Layout>
