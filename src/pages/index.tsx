@@ -19,15 +19,6 @@ const Home: NextPage = () => {
   const sleep = (ms: number) =>
     new Promise((resolve) => setTimeout(resolve, ms));
 
-  useEffect(() => {
-    const storedTrackName = localStorage.getItem("trackName");
-    const storedArtistName = localStorage.getItem("artistName");
-    if (storedTrackName && storedArtistName) {
-      setTrackName(storedTrackName);
-      setArtistName(storedArtistName);
-    }
-  }, []);
-
   const handleTrackChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTrackName(e.target.value);
   };
@@ -72,9 +63,30 @@ const Home: NextPage = () => {
   };
 
   useEffect(() => {
+    const storedTrackName = localStorage.getItem("trackName");
+    const storedArtistName = localStorage.getItem("artistName");
+    if (storedTrackName && storedArtistName) {
+      setTrackName(storedTrackName);
+      setArtistName(storedArtistName);
+    }
+  }, []);
+
+  useEffect(() => {
     localStorage.setItem("trackName", trackName);
     localStorage.setItem("artistName", artistName);
   }, [trackName, artistName]);
+
+  useEffect(() => {
+    // Clear input fields on page reload
+    const clearInputFields = () => {
+      setTrackName("");
+      setArtistName("");
+    };
+    window.addEventListener("beforeunload", clearInputFields);
+    return () => {
+      window.removeEventListener("beforeunload", clearInputFields);
+    };
+  }, []);
 
   return (
     <Layout>
